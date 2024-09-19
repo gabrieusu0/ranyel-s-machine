@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Bases</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #003366, #00e1ff); /* Gradiente de azul escuro para laranja */
+            color: #fff; /* Texto em branco para contraste */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            background: #003366; /* Fundo da caixa principal */
+            border-radius: 10px;
+            overflow: hidden;
+            width: 80%;
+            max-width: 1000px;
+        }
+
+        .input-section, .output-section {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .input-section {
+            background: #004080; /* Azul mais claro para a seção de entrada */
+        }
+
+        .output-section {
+            background: #00264d; /* Azul escuro para a seção de saída */
+        }
+
+        h1, h3 {
+            color: #ffcc00; /* Amarelo para os títulos */
+        }
+
+        input[type="text"], select, button {
+            margin: 10px 0;
+            padding: 10px;
+            border: 2px solid #ffcc00;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        select {
+            background-color: #003366;
+            color: #ffcc00;
+        }
+
+        button {
+            background-color: #ff6600; /* Cor de fundo laranja */
+            color: #fff; /* Texto em branco */
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #cc5200; /* Um tom mais escuro de laranja ao passar o mouse */
+        }
+
+        #div_mensagem {
+            margin-top: 100px;
+            font-size: 1.2em;
+            color: #ffcc00;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+    PRIMEIRO VALOR E BASE
+    SEGUNDO VALOR E BASE
+    QUAL OPERAÇÃO
+    QUAL BASE O RESULTADO 
+    -->
+    <div class="container">
+        <!-- Seção de entrada -->
+        <div class="input-section">
+            <h1>Guys'sensei Machine</h1>
+            <h3>Insira o valor que deseja converter</h3>
+            <input id="ipt_valor" type="text" placeholder="Digite o valor">
+
+            <h3>Converter de:</h3>
+            <select id="de">
+                <option value="2">Binário</option>
+                <option value="10">Decimal</option>
+                <option value="8">Octal</option>
+                <option value="16">Hexadecimal</option>
+            </select>
+
+            <h3>Converter para:</h3>
+            <select id="para">
+                <option value="2">Binário</option>
+                <option value="10">Decimal</option>
+                <option value="8">Octal</option>
+                <option value="16">Hexadecimal</option>
+                <option value="1">Todas as opções</option>
+            </select>
+
+            <button onclick="converter()">Converter</button>
+            <a href="C:\Users\gibie\OneDrive\Área de Trabalho\SPTECH\Primeiro Semestre\Arquitetura Computacional\SPRINT 2\Conversor\OPERAÇÕES.HTML"><button>Operações</button></a>
+
+        </div>
+
+        <!-- Seção de saída -->
+        <div class="output-section">
+            <div id="div_mensagem"></div>
+        </div>
+    </div>
+
+    <script>
+         // função para realizar a conversão
+        function converter() {
+                    
+        // obtém o valor da entrada
+        var valorInput = (document.getElementById("ipt_valor").value);
+                    
+        // obtem o tipo de base
+        var selectDe = Number(document.getElementById("de").value);
+        var selectPara = Number(document.getElementById("para").value);
+                    
+        // Transformando em base 10
+        var TudoDecimal = parseInt(valorInput,selectDe);
+                    
+                    
+        if (selectPara === 1) {
+            
+        // transformando a base decimal em todas as bases
+            
+        var BaseOctal = TudoDecimal.toString(8);
+        var BaseHexadecimal = TudoDecimal.toString(16);
+        var BaseBinaria = TudoDecimal.toString(2)
+            
+        // mostrando todas as bases
+            
+            div_mensagem.innerHTML = `
+            A conversão do número ${valorInput} da base ${selectDe} para todas as bases é:
+            <br>Binário: ${BaseBinaria}
+            <br>Octal: ${BaseOctal}
+            <br>Hexadecimal: ${BaseHexadecimal}
+            <br>Decimal: ${TudoDecimal}
+            `;
+        }else{
+            
+        // Convertendo para as Bases que querem
+        var conversao = TudoDecimal.toString(selectPara);
+            
+            div_mensagem.innerHTML = `
+            A conversão do número ${valorInput} da base ${selectDe} para a base ${selectPara} é: ${conversao}
+            <br><br>     
+            `;
+            
+            }
+        }
+        
+    </script>
+</body>
+</html>

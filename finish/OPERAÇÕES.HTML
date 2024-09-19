@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Bases e Operações</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #003366, #00e1ff); /* Fundo em gradiente de azul escuro para laranja */
+            color: #fff; /* Texto branco */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            background: #003366; /* Fundo da caixa principal */
+            border-radius: 10px;
+            overflow: hidden;
+            width: 80%;
+            max-width: 1000px;
+        }
+
+        .input-section, .output-section {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .input-section {
+            background: #004080; /* Azul mais claro para a seção de entrada */
+        }
+
+        .output-section {
+            background: #00264d; /* Azul escuro para a seção de saída */
+        }
+
+        h1, h3 {
+            color: #ffcc00; /* Amarelo para os títulos */
+        }
+
+        input[type="text"], select, button {
+            margin: 5px 0;
+            padding: 10px;
+            border: 2px solid #ffcc00;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        select {
+            background-color: #003366;
+            color: #ffcc00;
+        }
+
+        button {
+            background-color: #ff6600; /* Cor de fundo laranja */
+            color: #fff; /* Texto branco */
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff6600; /* Um tom mais escuro de laranja ao passar o mouse */
+        }
+
+        #div_mensagem {
+            margin-top: 300px;
+            font-size: 1.2em;
+            color: #ffcc00;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Seção de entrada -->
+        <div class="input-section">
+            <h1>Raniel's Machine</h1>
+            <h3>Insira o primeiro valor e sua base</h3>
+            <input id="ipt_valor_1" type="text" placeholder="Digite o valor"> <br>
+            <select id="PrimeiroValor">
+                <option value="2">Binário</option>
+                <option value="10">Decimal</option>
+                <option value="8">Octal</option>
+                <option value="16">Hexadecimal</option>
+            </select>
+
+            <h3>Insira o segundo valor e sua base</h3>
+            <input id="ipt_valor_2" type="text" placeholder="Digite o valor"> <br>
+            <select id="SegundoValor">
+                <option value="2">Binário</option>
+                <option value="10">Decimal</option>
+                <option value="8">Octal</option>
+                <option value="16">Hexadecimal</option>
+            </select>
+
+            <h3>Qual operação você deseja utilizar?</h3>
+            <select id="Operacao">
+                <option value="+">Soma</option>
+                <option value="-">Subtração</option>
+                <option value="*">Multiplicação</option>
+                <option value="/">Divisão</option>
+            </select>
+
+            <h3>Qual base você deseja seu resultado?</h3>
+            <select id="Resultado">
+                <option value="2">Binário</option>
+                <option value="10">Decimal</option>
+                <option value="8">Octal</option>
+                <option value="16">Hexadecimal</option>
+                <option value="1">Todas as opções</option>
+            </select> <br><br>
+
+            <button onclick="converter()">Converter</button>
+        </div>
+
+        <!-- Seção de saída -->
+        <div class="output-section">
+            <div id="div_mensagem"></div>
+        </div>
+    </div>
+
+    <script>
+        // função para realizar a conversão
+        function converter() {
+            var valorPrimeiraInput = document.getElementById("ipt_valor_1").value.trim();
+            var valorSegundaInput = document.getElementById("ipt_valor_2").value.trim();
+
+            var BasePrimeiroValor = Number(document.getElementById("PrimeiroValor").value);
+            var BaseSegundoValor = Number(document.getElementById("SegundoValor").value);
+
+            var TipoOperacao = document.getElementById("Operacao").value;
+            var TipoResultado = Number(document.getElementById("Resultado").value);
+
+            var BaseUmTudoDecimal = parseInt(valorPrimeiraInput, BasePrimeiroValor);
+            var BaseDoisTudoDecimal = parseInt(valorSegundaInput, BaseSegundoValor);
+
+            if (isNaN(BaseUmTudoDecimal) || isNaN(BaseDoisTudoDecimal)) {
+                document.getElementById('div_mensagem').innerText = "Valores inválidos para as bases selecionadas.";
+                return;
+            }
+
+            var operacao = 0;
+            if (TipoOperacao == '+') {
+                operacao = BaseUmTudoDecimal + BaseDoisTudoDecimal;
+                TipoOperacao = 'Soma';
+            } else if (TipoOperacao == '-') {
+                operacao = BaseUmTudoDecimal - BaseDoisTudoDecimal;
+                TipoOperacao = 'Subtração';
+            } else if (TipoOperacao == '*') {
+                operacao = BaseUmTudoDecimal * BaseDoisTudoDecimal;
+                TipoOperacao = 'Multiplicação';
+            } else if (TipoOperacao == '/') {
+                operacao = BaseUmTudoDecimal / BaseDoisTudoDecimal;
+                TipoOperacao = 'Divisão';
+            }
+
+            if (TipoResultado === 1) {
+                var BaseBinaria = operacao.toString(2);
+                var BaseOctal = operacao.toString(8);
+                var BaseHexadecimal = operacao.toString(16).toUpperCase();
+
+                document.getElementById('div_mensagem').innerHTML = `
+                    O resultado da ${TipoOperacao} dos números ${valorPrimeiraInput} da base ${BasePrimeiroValor} e ${valorSegundaInput} da base ${BaseSegundoValor} para todas as bases é:
+                    <br>Binário: ${BaseBinaria}
+                    <br>Octal: ${BaseOctal}
+                    <br>Hexadecimal: ${BaseHexadecimal}
+                    <br>Decimal: ${operacao}
+                `;
+            } else {
+                var conversao = operacao.toString(TipoResultado);
+                document.getElementById('div_mensagem').innerHTML = `
+                    O resultado da ${TipoOperacao} dos números: <br>
+                    ${valorPrimeiraInput} da base ${BasePrimeiroValor} e <br>
+                    ${valorSegundaInput} da base ${BaseSegundoValor} <br>
+                    para a base ${TipoResultado} é: ${conversao}
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
